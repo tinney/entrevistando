@@ -52,7 +52,7 @@ class RecruiterBoxService
 
     private
     def api_key
-      '920f9e34c6a2440e901ea7ded4ab0d38'
+      ENV.fetch("RECRUITERBOX_API_KEY")
     end
 
     def get_candidates_attrs(offset:, limit:)

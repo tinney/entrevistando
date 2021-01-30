@@ -22,7 +22,6 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-
 gem "chartkick"
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -32,6 +31,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'haml-rails'
 gem 'httparty'
+gem "dotenv-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

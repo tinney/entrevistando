@@ -26,7 +26,7 @@ class Candidate < ApplicationRecord
   has_many :interviews
 
   scope :active, -> { where(state: 'in_process') }
-  scope :inactive, -> { where(state: ["rejected", "hired", "withdrawn"]) }
+  scope :inactive, -> { where(state: ["rejected", "hired", "withdrawn", "declined_offer"]) }
   scope :unpopulated, -> { where(state: nil) }
   scope :in_consultant_opening, -> { where(opening_id: SENIOR_SOFTWARE_CONSULTANT_OPENING_ID) }
   scope :in_subcontractor_opening, -> { where(opening_id: SUBCONTRACTOR_OPENING) }
