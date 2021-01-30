@@ -10,11 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_131216) do
+ActiveRecord::Schema.define(version: 2020_12_12_232818) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "candidates", force: :cascade do |t|
-    t.integer "recruiter_box_id"
+    t.integer "recruiterbox_id"
     t.integer "start_date_epoch"
+    t.integer "updated_date_epoch"
     t.integer "end_date_epoch"
     t.string "first_name"
     t.string "last_name"
@@ -26,6 +30,24 @@ ActiveRecord::Schema.define(version: 2020_08_07_131216) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "assigned"
+  end
+
+  create_table "interviews", force: :cascade do |t|
+    t.integer "recruiterbox_id"
+    t.string "title"
+    t.integer "time_epoch"
+    t.integer "date_created"
+    t.bigint "candidate_id"
+    t.bigint "user_id"
+    t.index ["candidate_id"], name: "index_interviews_on_candidate_id"
+    t.index ["user_id"], name: "index_interviews_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

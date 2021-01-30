@@ -3,10 +3,10 @@
 # Table name: candidates
 #
 #  id               :integer          not null, primary key
-#  recruiter_box_id :integer
+#  recruiterbox_id  :integer
 #  start_date_epoch :integer
 #  end_date_epoch   :integer
-#  first_name       :text
+#  first_name       :string
 #  last_name        :string
 #  email            :string
 #  source           :string
@@ -19,12 +19,21 @@
 #
 
 class Candidate < ApplicationRecord
+  SENIOR_SOFTWARE_CONSULTANT_OPENING_ID = 254644.freeze
+  SUBCONTRACTOR_OPENING = 332205.freeze
+  THREE_DAYS_IN_SECONDS = 259_200.freeze
+
+  has_many :interviews
+
   scope :active, -> { where(state: 'in_process') }
+  scope :inactive, -> { where(state: ["rejected", "hired", "withdrawn"]) }
   scope :unpopulated, -> { where(state: nil) }
+  scope :in_consultant_opening, -> { where(opening_id: SENIOR_SOFTWARE_CONSULTANT_OPENING_ID) }
+  scope :in_subcontractor_opening, -> { where(opening_id: SUBCONTRACTOR_OPENING) }
 
-  SENIOR_SOFTWARE_CONSULTANT_OPENING_ID = 254644
-
-  scope :in_consultant_openings, -> { where(opening_id: [SENIOR_SOFTWARE_CONSULTANT_OPENING_ID, 332205]) }
+  scope :this_year, -> { where("start_date_epoch >= ?", Date.today.beginning_of_year.to_time.to_i) }
+  scope :last_12_months, -> { where("start_date_epoch >= ?", 1.year.ago.to_i) }
+  scope :interviewed, -> { where("end_date_epoch IS NULL OR (end_date_epoch - start_date_epoch) > ?", THREE_DAYS_IN_SECONDS) }
 
   def stage
     stages[stage_id] || stage_id
@@ -35,7 +44,7 @@ class Candidate < ApplicationRecord
   end
 
   def start_date
-    Time.at(start_date_epoch)
+    Time.at(start_date_epoch).to_date
   end
 
   def dq_reason

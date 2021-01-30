@@ -1,0 +1,60 @@
+<table class="min-w-full divide-y divide-gray-200">
+  <thead class="bg-gray-50">
+    <tr>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Name
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Start Date
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Consulting
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Tech
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Take-home
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Pairing
+      </th>
+      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Determination
+      </th>
+      <th scope="col" class="relative px-6 py-3">
+        <span class="sr-only">Show</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% candidates.each_with_index do |candidate, index| %>
+      <tr class="<%= index.even? ? 'bg-white' : 'bg-gray-50' %>">
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+          <%= candidate.name %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= time_ago_in_words(candidate.start_date) %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= candidate.consulting_date %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= candidate.technical_date %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= candidate.takehome_date %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= candidate.pairing_date %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <%= candidate.determination_date %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+          <%= link_to 'Show', candidate_path(candidate.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

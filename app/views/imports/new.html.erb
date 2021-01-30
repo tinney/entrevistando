@@ -1,0 +1,18 @@
+<h1>Import Data</h1>
+<%= form_with url: imports_path do %>
+<div>
+  <label for="candidates" class="block text-sm font-medium text-gray-700">Candidates</label>
+  <div class="mt-1">
+    <%= file_field(:import, :candidates) %>
+  </div>
+</div>
+<div>
+  <label for="interviews" class="block text-sm font-medium text-gray-700">Email</label>
+  <div class="mt-1">
+    <%= file_field(:import, :interviews) %>
+  </div>
+</div>
+<div>
+  <input type="submit" value="Submit">
+</div>
+<% end %>

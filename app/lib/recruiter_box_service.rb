@@ -27,16 +27,22 @@ class RecruiterBoxService
       end
     end
 
-    def candidate(recruiter_box_id:)
-      get("candidates/#{recruiter_box_id}")
+    def candidate(recruiterbox_id:)
+      get("candidates/#{recruiterbox_id}")
     end
 
-    def candidate_interviews(recruiter_box_id:)
-      get("interviews?candidate_id=#{recruiter_box_id}")
+    def interviews(candidate_id: nil)
+      attributes = candidate_id.nil? ? get("interviews") : get("interviews?candidate_id=#{candidate_id}")
+      raise "No interviews found API error" if attributes.nil?
+      attributes['objects']
     end
 
-    def candidate_evaluations(recruiter_box_id:)
-      get("evaluations?candidate_id=#{recruiter_box_id}")
+    def interview(id:)
+      get("interviews/#{id}")
+    end
+
+    def candidate_evaluations(recruiterbox_id:)
+      get("evaluations?candidate_id=#{recruiterbox_id}")
     end
 
     def candidate_resource(resource:, id:)
@@ -49,8 +55,13 @@ class RecruiterBoxService
       '920f9e34c6a2440e901ea7ded4ab0d38'
     end
 
-
     def get_candidates_attrs(offset:, limit:)
+      attributes = get("candidates?offset=#{offset}&limit=#{limit}")['objects']
+      raise "No candidate attrs found API error" if attributes.nil?
+      attributes
+    end
+
+    def get_interview_attrs()
       attributes = get("candidates?offset=#{offset}&limit=#{limit}")['objects']
       raise "No candidate attrs found API error" if attributes.nil?
       attributes

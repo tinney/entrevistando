@@ -2,6 +2,7 @@ module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
+
   },
   purge: [],
   target: "relaxed",
@@ -811,5 +812,5 @@ module.exports = {
     animation: ["responsive"],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [ ],
 };

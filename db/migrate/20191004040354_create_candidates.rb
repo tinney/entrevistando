@@ -3,6 +3,7 @@ class CreateCandidates < ActiveRecord::Migration[5.2]
     create_table :candidates do |t|
       t.integer :recruiter_box_id
       t.integer :start_date_epoch
+      t.integer :updated_date_epoch
       t.integer :end_date_epoch
       t.string  :first_name
       t.string  :last_name
