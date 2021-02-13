@@ -2,21 +2,22 @@
   <div class="col-span-12">
     <%= line_chart api_weekly_staffing_needs_path, title: "Staffing Needs", ymax: 20 %>
   </div>
-  <div class="col-span-6">
+  <div class="col-span-3">
     <%= column_chart api_weekly_candidates_path, title: "Weekly Candidates" %>
   </div>
-  <div class="col-span-6">
-    <%= line_chart api_subcontractor_percent_path, title: "Subcontractor vs FTE" %>
+  <div class="col-span-3">
+    <%= column_chart api_weekly_subcontractors_path, title: "Weekly Subcontractors", colors: ["#e53e3e"] %>
   </div>
   <div class="col-span-6">
-    <%= pie_chart api_percent_offers_path, title: "Percent Offer" %>
+    <%= line_chart api_subcontractor_percent_path, title: "% Subs" %>
   </div>
   <div class="col-span-6">
-    Talent	Plus/Minus staffing	Weekly via manual	2 agents available to 6 agents needed (+2/-6)
-    Talent	Percentage of offers	Monthly via manual	>= 30%
+    <%= pie_chart api_percent_offers_path, title: "Offer %" %>
+  </div>
+  <!-- div class="col-span-6">
     Talent	Speed of offers	Monthly via manual	<= 10 days
     Talent	Diversity of candidates	Quarterly via manual	>= 50%
     Talent	No mishires	Monthly via manual	0
     Talent	FT Consultants	Monthly via Gusto	55 by 8/21
-  </div>
+  </div -->
 </div>

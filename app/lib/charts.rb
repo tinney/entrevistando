@@ -1,19 +1,11 @@
 class Charts
   class << self
     def weekly_candidates
-      weekly_counts = {}
-      Candidate.in_consultant_opening
-        .this_year
-        .interviewed
-        .each do |candidate|
-          next unless candidate.start_date.cwyear == Date.today.year
-          key = candidate.start_date.beginning_of_week.strftime("%m/%d")
-          puts "#{key} - #{candidate.first_name} #{candidate.last_name}"
-          weekly_counts[key] ||= 0
-          weekly_counts[key] += 1
-        end
+      map_weekly_counts(Finders::CandidateFinder.recent_consultants)
+    end
 
-      weekly_counts.sort
+    def weekly_subcontractors
+      map_weekly_counts(Finders::CandidateFinder.recent_subcontractors)
     end
 
     def weekly_staffing_needs
@@ -40,10 +32,42 @@ class Charts
     end
     
     def subcontractor_percent
-      {
-        "December": (18 / 60).to_s,
-        "January": "30",
+      { 
+        "2021-01-17": (17 / 54.0) * 100,
+        "2021-01-10": (17 / 54.0) * 100,
+        "2020-12-27": (18 / 54.0) * 100,
+        "2020-12-20": (18 / 53.0) * 100,
+        "2020-12-13": (18 / 51.0) * 100,
+        "2020-12-06": (18 / 51.0) * 100,
+        "2020-11-29": (18 / 52.0) * 100,
+        "2020-11-22": (17 / 50.0) * 100,
+        "2020-11-15": (17 / 51.0) * 100,
+        "2020-11-08": (17 / 50.0) * 100,
+        "2020-11-01": (18 / 48.0) * 100
       }
+      # 2021-01-17 | SUB       |    17
+      # 2021-01-10 | FTE       |    54
+      # 2021-01-10 | SUB       |    17
+      # 2021-01-03 | SUB       |    17
+      # 2021-01-03 | FTE       |    54
+      # 2020-12-27 | FTE       |    53
+      # 2020-12-27 | SUB       |    18
+      # 2020-12-20 | FTE       |    53
+      # 2020-12-20 | SUB       |    17
+      # 2020-12-13 | FTE       |    52
+      # 2020-12-13 | SUB       |    18
+      # 2020-12-06 | FTE       |    51
+      # 2020-12-06 | SUB       |    18
+      # 2020-11-29 | FTE       |    52
+      # 2020-11-29 | SUB       |    18
+      # 2020-11-22 | FTE       |    50
+      # 2020-11-22 | SUB       |    17
+      # 2020-11-15 | SUB       |    17
+      # 2020-11-15 | FTE       |    51
+      # 2020-11-08 | SUB       |    17
+      # 2020-11-08 | FTE       |    50
+      # 2020-11-01 | FTE       |    48
+      # 2020-11-01 | SUB       |    18
     end
 
     def percent_offers
@@ -56,8 +80,22 @@ class Charts
       percent_offers.each { |k, v| percent_offers[k] = to_percent(v.count, candidates.count) }
     end
 
+    private
+
     def to_percent(value, total)
       ((value / total.to_f) * 100).to_i
+    end
+
+    def map_weekly_counts(candidates)
+      weekly_counts = Hash.new(0)
+      recent_candidates = candidates.filter { |c| c.start_date.cwyear == Date.today.year }
+
+      recent_candidates.each do |candidate|
+        key = candidate.start_date.beginning_of_week.strftime("%m/%d")
+        weekly_counts[key] += 1
+      end
+
+      weekly_counts.sort
     end
   end
 end

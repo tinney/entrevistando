@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace "api" do
     get 'chart_weekly_candidates', to: 'charts#weekly_candidates', as: "weekly_candidates"
+    get 'chart_weekly_subcontractors', to: 'charts#weekly_subcontractors', as: "weekly_subcontractors"
     get 'chart_weekly_bench', to: 'charts#weekly_bench', as: "weekly_bench"
     get 'subcontractor_percent', to: 'charts#subcontractor_percent', as: "subcontractor_percent"
     get 'percent_offers', to: 'charts#percent_offers', as: "percent_offers"

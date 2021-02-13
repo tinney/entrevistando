@@ -33,7 +33,7 @@ class Candidate < ApplicationRecord
 
   scope :this_year, -> { where("start_date_epoch >= ?", Date.today.beginning_of_year.to_time.to_i) }
   scope :last_12_months, -> { where("start_date_epoch >= ?", 1.year.ago.to_i) }
-  scope :interviewed, -> { where("end_date_epoch IS NULL OR (end_date_epoch - start_date_epoch) > ?", THREE_DAYS_IN_SECONDS) }
+  scope :interviewed, -> { where("(end_date_epoch IS NULL OR (end_date_epoch - start_date_epoch) > ?)", THREE_DAYS_IN_SECONDS) }
 
   def stage
     stages[stage_id] || stage_id
