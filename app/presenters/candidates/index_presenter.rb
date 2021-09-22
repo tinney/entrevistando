@@ -3,10 +3,15 @@ class Candidates::IndexPresenter
 
   attr_reader :candidate
 
-  delegate :name, :start_date, :stage, :assigned_to, :id, :interviews, to: :candidate
+  delegate :name, :start_date, :stage, :assigned_to, :id, :recruiterbox_id, :interviews, to: :candidate
 
   def initialize(candidate)
     @candidate = candidate
+  end
+
+  def bridge_date
+    interview = interviews.bridge.first
+    format_time(interview)
   end
 
   def pairing_date
@@ -34,6 +39,47 @@ class Candidates::IndexPresenter
     format_time(interview)
   end
 
+  def bridge_state
+    interview = interviews.bridge.first
+    state(interview)
+  end
+
+  def pairing_state
+    interview = interviews.pairing.first
+    state(interview)
+  end
+  
+  def technical_state
+    interview = interviews.technical.first
+    state(interview)
+  end
+  
+  def consulting_state
+    interview = interviews.consulting.first
+    state(interview)
+  end
+
+  def takehome_state
+    interview = interviews.takehome.first
+    state(interview)
+  end
+
+  def determination_state
+    interview = interviews.determination.first
+    state(interview)
+  end
+
+  def state(interview)
+    return 'upcoming' unless interview
+    return 'current' unless interview.time
+
+    if interview.time > Time.now
+      "current"
+    else
+      "completed"
+    end
+  end
+
   def format_time(interview)
     return '-' unless interview
     return 'slots suggested' unless interview.time
@@ -43,7 +89,7 @@ class Candidates::IndexPresenter
     if time > Time.now
       time.strftime("%a")
     else
-      "#{time_ago_in_words(time)} ago"
+      "✓"
     end
   end
 end

@@ -20,15 +20,20 @@
 
 class Candidate < ApplicationRecord
   SENIOR_SOFTWARE_CONSULTANT_OPENING_ID = 254644.freeze
+  DEVOPS_CONSULTANT_OPENING_ID = 438014.freeze 
   SUBCONTRACTOR_OPENING = 332205.freeze
   THREE_DAYS_IN_SECONDS = 259_200.freeze
 
+  STATES = {active: "in_process"}
+
   has_many :interviews
 
-  scope :active, -> { where(state: 'in_process') }
+  scope :active, -> { where(state: STATES[:active]) }
   scope :inactive, -> { where(state: ["rejected", "hired", "withdrawn", "declined_offer"]) }
   scope :unpopulated, -> { where(state: nil) }
+
   scope :in_consultant_opening, -> { where(opening_id: SENIOR_SOFTWARE_CONSULTANT_OPENING_ID) }
+  scope :in_devops_opening, -> { where(opening_id: DEVOPS_CONSULTANT_OPENING_ID) }
   scope :in_subcontractor_opening, -> { where(opening_id: SUBCONTRACTOR_OPENING) }
 
   scope :this_year, -> { where("start_date_epoch >= ?", Date.today.beginning_of_year.to_time.to_i) }
@@ -37,6 +42,10 @@ class Candidate < ApplicationRecord
 
   def stage
     stages[stage_id] || stage_id
+  end
+
+  def active?
+    state == STATES[:active]
   end
 
   def name

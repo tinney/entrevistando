@@ -9,6 +9,7 @@ class RecruiterBoxService
       offset = DEFAULT_OFFSET
 
       while(true) do
+        sleep(4)
         candidate_attrs = get_candidates_attrs(limit: MAX_CANDIDATES, offset: offset)
 
         candidate_attrs.each do |candidate_attr|
@@ -21,7 +22,7 @@ class RecruiterBoxService
     end
 
     def candidates(limit: MAX_CANDIDATES, offset: DEFAULT_OFFSET)
-      raise "Limit must be less than 100" if limit > MAX_CANDIDATES
+      raise "Limit must be 100 or less" if limit > MAX_CANDIDATES
       get_candidates_attrs(offset: offset, limit: limit).each do |candidate_attrs|
         yield candidate_attrs
       end

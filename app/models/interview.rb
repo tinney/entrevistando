@@ -11,8 +11,9 @@
 #  user_id         :integer
 #
 class Interview < ApplicationRecord
-  PAIRING_TITLE = "Pairing Interview"
-  CONSULTING_TITLE = "Consulting Interview"
+  BRIDGE_TITLE = "Bridge"
+  PAIRING_TITLE = "Pairing"
+  CONSULTING_TITLE = "Consulting"
   TECHNICAL_TITLE = "Technical"
   TAKEHOME_TITLE = "Home"
   DETERMINATION_TITLE = "Determination"
@@ -20,14 +21,15 @@ class Interview < ApplicationRecord
   belongs_to :candidate
   belongs_to :user
 
-  scope :pairing, -> { where(title: PAIRING_TITLE) }
-  scope :consulting, -> { where(title: CONSULTING_TITLE) }
+  scope :bridge, -> { where("title like ?", "%#{BRIDGE_TITLE}%") }
+  scope :pairing, -> { where("title like ?", "%#{PAIRING_TITLE}%") }
+  scope :consulting, -> { where("title like ?", "%#{CONSULTING_TITLE}%") }
   scope :technical, -> { where("title like ?", "%#{TECHNICAL_TITLE}%") }
   scope :takehome, -> { where("title like ?", "%#{TAKEHOME_TITLE}%") }
-  scope :determination, -> { where("title like ?", "#{DETERMINATION_TITLE}%") }
+  scope :determination, -> { where("title like ?", "%#{DETERMINATION_TITLE}%") }
 
   def date
-    Time.at(date_created)
+    date_created.blank? ? Time.now : Time.at(date_created)
   end
 
   def time

@@ -1,59 +1,40 @@
-<table class="min-w-full divide-y divide-gray-200">
+
+<table class="table-fixed min-w-full divide-y divide-gray-200">
   <thead class="bg-gray-50">
     <tr>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      <th scope="col" class="w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
         Name
       </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      <th scope="col" class="w-1/4 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
         Start Date
       </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      <th scope="col" class="w-1/8 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
         Consulting
       </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        Tech
+      <th scope="col" class="w-1/8 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Technical
       </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        Take-home
+      <th scope="col" class="w-1/8 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Take-Home
       </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        Pairing
-      </th>
-      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        Determination
-      </th>
-      <th scope="col" class="relative px-6 py-3">
-        <span class="sr-only">Show</span>
+      <th scope="col" class="w-1/8 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+        Pairing 
       </th>
     </tr>
   </thead>
   <tbody>
     <% candidates.each_with_index do |candidate, index| %>
       <tr class="<%= index.even? ? 'bg-white' : 'bg-gray-50' %>">
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          <%= candidate.name %>
+        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+          <%= link_to candidate.name, "https://testdouble.recruiterbox.com/app/#candidates/view:#{candidate.recruiterbox_id}/"  %>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        <td class="px-6 pt-4 whitespace-nowrap text-sm text-gray-500">
           <%= time_ago_in_words(candidate.start_date) %>
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <%= candidate.consulting_date %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <%= candidate.technical_date %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <%= candidate.takehome_date %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <%= candidate.pairing_date %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          <%= candidate.determination_date %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-          <%= link_to 'Show', candidate_path(candidate.id) %>
-        </td>
+        <td class="w-1/8 text-center"><%= render partial: "#{candidate.consulting_state}_step", locals: { step_name: "Consulting" } %></td>
+        <td class="w-1/8 text-center"><%= render partial: "#{candidate.technical_state}_step", locals: { step_name: "Tech" } %></td>
+        <td class="w-1/8 text-center"><%= render partial: "#{candidate.takehome_state}_step", locals: { step_name: "Take-home" } %></td>
+        <td class="w-1/8 text-center"><%= render partial: "#{candidate.pairing_state}_step", locals: { step_name: "Pairing" } %></td>
       </tr>
     <% end %>
   </tbody>

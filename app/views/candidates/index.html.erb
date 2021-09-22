@@ -1,3 +1,11 @@
+<div class="mb-10">
+  <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <a href="?refresh=true">
+      Refresh Feed
+    </a>
+  </button>
+</div>
+
 <div class="flex flex-col">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -6,10 +14,19 @@
       </div>
     </div>
   </div>
+
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-10">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <%= render partial: 'candidates_table', locals: { candidates: @subcontractors} %>
+        <%= render partial: 'candidates_table', locals: { candidates: @devops_candidates} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-10">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <%= render partial: 'subcontractor_table', locals: { candidates: @subcontractors} %>
       </div>
     </div>
   </div>

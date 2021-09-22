@@ -46,8 +46,6 @@ class RecruiterBoxCsvParser
       }
     end
 
-
-
     def to_epoch(date)
       return nil unless date
       Date.parse(date).to_time.to_i

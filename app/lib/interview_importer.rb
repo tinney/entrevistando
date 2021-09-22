@@ -1,6 +1,6 @@
 class InterviewImporter
   class << self
-    def create_or_update!(attributes)
+    def create_or_update_all!(attributes)
       attributes.each do |interview_attributes|
         interview = Interview.find_by(recruiterbox_id: interview_attributes['id'])
         interview.nil? ? create!(interview_attributes) : update!(interview, interview_attributes)
